@@ -108,3 +108,8 @@ nms_clickhouse_redhat_dependencies: [
   yum-utils,
 ]
 nms_clickhouse_yum_repo: https://packages.clickhouse.com/rpm/{{ nms_clickhouse_release_kind }}/
+
+## If keepalived should be enabled for active/passive resiliency (need > 1 ctrl node)
+nms_enable_keepalived: false
+nms_vrrp_router_id: ""
+nms_ctrl_floating_ip: ""

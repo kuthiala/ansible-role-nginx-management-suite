@@ -11,3 +11,9 @@
     name: nginx
     state: restarted
   when: nms_service_state | lower != 'stopped'
+
+- name: Stop Clickhouse-server
+  ansible.builtin.service:
+    name: clickhouse-server
+    state: stopped
+  when: nms_service_state | lower != 'stopped'

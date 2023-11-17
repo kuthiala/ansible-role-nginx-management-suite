@@ -1,0 +1,34 @@
+vrrp_script nms_check_keepalived {
+    script "/etc/nms/scripts/nms-check-keepalived.sh"
+    interval 10
+    weight 10
+}
+
+vrrp_instance {{ vrrp_instance }}  {
+        state {{ vrrp_state }}
+        interface  {{ def_iface_name }}
+        priority 100
+        virtual_router_id {{ router_id }}
+
+
+        # Advertisement interval in seconds
+        advert_int 1        accept
+
+
+
+        # Authentication for VRRP packets (optional)
+        authentication {
+                auth_type PASS
+                auth_pass my_secret_password
+        }
+
+        virtual_ipaddress {
+                {{ nms_ctrl_floating_ip }}
+        }
+        track_script {
+                # Unique identifier for this script tracking
+                nms_check_keepalived
+        }
+
+        notify /etc/nms/scripts/nms-notify-keepalived.sh
+}
